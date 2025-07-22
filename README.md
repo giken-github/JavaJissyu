@@ -13,7 +13,7 @@
   - PosgreSQL Driver
 - Lombok
 
-**本リポジトリを自分Githubアカウントにコピー(右上の「Use This Template」を押す)して利用してください**
+**本リポジトリを自分Githubアカウントにコピー(右上の「Use this template」→「Create a new repository」)して利用してください**
 
 ## 必要なソフトウエア
 
@@ -54,17 +54,29 @@ VSCode を起動し、フォークしたリポジトリを適当な場所にク�
 
 ## 実行およびデバッグ方法
 
-### Eclipse
+### Eclipseを使用している場合
 
 Eclipseでインポートしたプロジェクトで、Alt+Shift+Xを同時押しした後、bキーを押します。
+本システムが起動したら、Webブラウザで以下のURLにアクセスします。
 
-### VSCode
+``` URL
+http://localhost:8080
+```
+
+### VSCodeを使用している場合
 
 クローンしたフォルダを VSCode で開いた状態で、F5 キーを押します。
+本システムが起動したら、Webブラウザで以下のURLにアクセスします。
+
+``` URL
+http://localhost:8080
+```
+
 
 ## データベースへのアクセス
 
 開発環境モードで動作中は、**H2 Database**で動作しています。本システムデバッグ中に、Webブラウザから以下のURLにアクセスすると、データベースを操作する画面が表示されます。
+
 ``` URL
 http://localhost:8080/h2-console
 ```
