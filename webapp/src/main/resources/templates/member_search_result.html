@@ -29,8 +29,8 @@
                 <td th:text="${row.mail}"></td>
                 <td th:text="${row.name}"></td>
                 <td th:text="${row.address}"></td>
-                <td th:text="${#dates.format(row.startDate, 'yyyy/MM/dd')}"></td>
-                <td th:text="${#dates.format(row.endDate, 'yyyy/MM/dd')}"></td>
+                <td th:text="${#temporals.format(row.startDate, 'yyyy/MM/dd')}"></td>
+                <td th:text="${#temporals.format(row.endDate, 'yyyy/MM/dd')}"></td>
                 <td th:text="${row.paymentMethod}"></td>
             </tr>
             <tr th:if="${#lists.isEmpty(result)}">
@@ -41,4 +41,5 @@
         </tbody>
     </table>
 </div>
+
 </html>
