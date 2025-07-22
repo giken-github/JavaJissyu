@@ -1,7 +1,7 @@
 package com.s_giken.training.webapp.model.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -49,34 +49,32 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
-    private int memberId;
+    private Long memberId;
 
-    @Column(name = "mail")
-    @NotNull
+    @Column(name = "mail", length = 255)
     @NotBlank
     private String mail;
 
-    @Column(name = "name")
-    @NotNull
+    @Column(name = "name", length = 31)
     @NotBlank
     private String name;
 
-    @Column(name = "address")
-    @NotNull
+    @Column(name = "address", length = 127)
+    @NotBlank
     private String address;
 
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column(name = "payment_method")
     @NotNull
-    private int paymentMethod;
+    private Byte paymentMethod;
 
     @CreatedDate
     private Timestamp createdDate;
