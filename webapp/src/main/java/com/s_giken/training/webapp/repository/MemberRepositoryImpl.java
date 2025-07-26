@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.s_giken.training.webapp.model.entity.Member;
@@ -20,54 +21,30 @@ public class MemberRepositoryImpl implements MemberRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private Member mapToMember(Map<String, Object> r) {
-        Long member_id = Optional.ofNullable(r.get("member_id"))
-                .filter(Long.class::isInstance)
-                .map(Long.class::cast)
+    private <T> T getValue(Object v, Class<T> type) {
+        return Optional.ofNullable(v)
+                .map(type::cast)
                 .orElse(null);
-        String mail = Optional.ofNullable(r.get("mail"))
-                .filter(String.class::isInstance)
-                .map(String.class::cast)
-                .orElse(null);
-        String name = Optional.ofNullable(r.get("name"))
-                .filter(String.class::isInstance)
-                .map(String.class::cast)
-                .orElse(null);
-        String address = Optional.ofNullable(r.get("address"))
-                .filter(String.class::isInstance)
-                .map(String.class::cast)
-                .orElse(null);
-        LocalDate start_date = Optional.ofNullable(r.get("start_date"))
-                .filter(Date.class::isInstance)
-                .map((d) -> ((Date) d).toLocalDate())
-                .orElse(null);
-        LocalDate end_date = Optional.ofNullable(r.get("end_date"))
-                .filter(Date.class::isInstance)
-                .map((d) -> ((Date) d).toLocalDate())
-                .orElse(null);
-        Byte payment_method = Optional.ofNullable(r.get("payment_method"))
-                .filter(Byte.class::isInstance)
-                .map(Byte.class::cast)
-                .orElse(null);
-        Timestamp created_at = Optional.ofNullable(r.get("created_at"))
-                .filter(Timestamp.class::isInstance)
-                .map(Timestamp.class::cast)
-                .orElse(null);
-        Timestamp modified_at = Optional.ofNullable(r.get("modified_at"))
-                .filter(Timestamp.class::isInstance)
-                .map(Timestamp.class::cast)
-                .orElse(null);
+    }
 
+    private <T> T getValue(Object v, Class<T> type, Function<Object, T> castfunc) {
+        return Optional.ofNullable(v)
+                .map(castfunc)
+                .map(type::cast)
+                .orElse(null);
+    }
+
+    private Member mapToMember(Map<String, Object> r) {
         return new Member(
-                member_id,
-                mail,
-                name,
-                address,
-                start_date,
-                end_date,
-                payment_method,
-                created_at,
-                modified_at);
+                getValue(r.get("member_id"), Long.class),
+                getValue(r.get("mail"), String.class),
+                getValue(r.get("name"), String.class),
+                getValue(r.get("address"), String.class),
+                getValue(r.get("start_date"), LocalDate.class, v -> ((Date) v).toLocalDate()),
+                getValue(r.get("end_date"), LocalDate.class, v -> ((Date) v).toLocalDate()),
+                getValue(r.get("payment_method"), Byte.class, v -> ((Integer) v).byteValue()),
+                getValue(r.get("created_at"), Timestamp.class),
+                getValue(r.get("modified_at"), Timestamp.class));
     }
 
     @Override
