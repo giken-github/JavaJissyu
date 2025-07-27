@@ -77,4 +77,33 @@ public class MemberRepositoryImpl implements MemberRepository {
         return result;
     }
 
+    @Override
+    public void save(Member member) {
+        String sql = """
+                        INSERT INTO T_MEMBER (mail, name, address, start_date, end_date, payment_method, created_at, modified_at)
+                        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                        -- Upsert for MySQL, H2
+                        ON DUPLICATE KEY UPDATE
+                            mail = VALUES(mail),
+                            name = VALUES(name),
+                            address = VALUES(address),
+                            start_date = VALUES(start_date),
+                            end_date = VALUES(end_date),
+                            payment_method = VALUES(payment_method),
+                            modified_at = CURRENT_TIMESTAMP
+                """;
+        jdbcTemplate.update(sql,
+                member.getMail(),
+                member.getName(),
+                member.getAddress(),
+                Date.valueOf(member.getStartDate()),
+                Date.valueOf(member.getEndDate()),
+                member.getPaymentMethod());
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        String sql = "DELETE FROM T_MEMBER WHERE member_id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }

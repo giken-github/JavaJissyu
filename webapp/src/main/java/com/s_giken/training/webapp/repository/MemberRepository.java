@@ -10,4 +10,8 @@ public interface MemberRepository {
     public Optional<Member> findById(Long id);
 
     public List<Member> findByMailLike(String mail);
+
+    public void save(Member member);
+
+    public void deleteById(Long id);
 }
