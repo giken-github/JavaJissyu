@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,4 +41,12 @@ public class Member {
 
     @NotNull
     private Timestamp updatedDate;
+
+    public String getPaymentMethodString() {
+        return switch (paymentMethod) {
+            case 1 -> "クレジット決済";
+            case 2 -> "銀行振込";
+            default -> "(不明)";
+        };
+    }
 }
