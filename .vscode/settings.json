@@ -7,7 +7,7 @@
     "\\.git"
   ],
   // "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-  "java.format.settings.url": "extra/eclipse-java-google-style-custom.xml",
+  "java.format.settings.url": "extra/eclipse-custom.xml",
   "java.format.settings.profile": "GoogleStyle",
   "editor.formatOnSave": true,
   "spring-boot.ls.problem.version-validation.UPDATE_LATEST_MINOR_VERSION": "IGNORE",
