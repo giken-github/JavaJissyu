@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout/app :: layout(${memberId != null}?'加入者編集':'加入者新規追加', ~{::content}, 'member')}">
+<html th:replace="~{layout/app :: layout(${member.memberId != null}?'加入者編集':'加入者新規追加', ~{::content}, 'member')}">
 <div th:fragment="content">
     <!--/*
         加入者情報編集画面
@@ -55,11 +55,17 @@
                     th:errors="*{paymentMethod}"></span>
             </div>
         </div>
-        <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
+        <div class="mb-3 row justify-content-between">
+            <div class="col-auto">
                 <button type="submit" class="btn btn-primary">保存</button>
                 <a class="btn btn-link" th:href="@{/member/search}">キャンセル</a>
+            </div>
+            <div class="col-auto">
+                <div th:if="${member.memberId} != null">
+                    <a class=" btn btn-danger" id="delete" th:href="@{/member/delete/{id}(id=${memberId})}"
+                        style="background-color: red;">削除
+                    </a>
+                </div>
             </div>
         </div>
     </form>
@@ -84,4 +90,5 @@
         });
     </script>
 </div>
+
 </html>
