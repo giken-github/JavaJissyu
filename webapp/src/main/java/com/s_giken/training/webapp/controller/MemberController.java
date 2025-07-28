@@ -79,7 +79,7 @@ public class MemberController {
 		if (!member.isPresent()) {
 			throw new NotFoundException(String.format("指定したmemberId(%d)の加入者情報が存在しません。", id));
 		}
-		model.addAttribute("member", member);
+		model.addAttribute("member", member.get());
 		return "member_edit";
 	}
 
