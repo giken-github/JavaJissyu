@@ -51,7 +51,7 @@ public class MemberController {
 	 * 加入者検索結果画面を表示する
 	 * 
 	 * @param memberSearchCodition 加入者検索条件画面で入力された検索条件
-	 * @param model Thymeleafに渡すデータ
+	 * @param model                Thymeleafに渡すデータ
 	 * @return 加入者検索結果画面のテンプレート名
 	 */
 	@PostMapping("/search")
@@ -66,7 +66,7 @@ public class MemberController {
 	/**
 	 * 加入者編集画面を表示する
 	 * 
-	 * @param id URLに指定された加入者ID
+	 * @param id    URLに指定された加入者ID
 	 * @param model Thymeleafに渡すデータ
 	 * @return 加入者編集画面のテンプレート名
 	 */
@@ -78,7 +78,7 @@ public class MemberController {
 		if (!member.isPresent()) {
 			throw new NotFoundException(String.format("指定したmemberId(%d)の加入者情報が存在しません。", id));
 		}
-		model.addAttribute("member", member);
+		model.addAttribute("member", member.get());
 		return "member_edit";
 	}
 
@@ -98,8 +98,8 @@ public class MemberController {
 	/**
 	 * 加入者情報を保存する
 	 * 
-	 * @param member 加入者編集画面で入力された加入者情報
-	 * @param bindingResult 入力チェック結果
+	 * @param member             加入者編集画面で入力された加入者情報
+	 * @param bindingResult      入力チェック結果
 	 * @param redirectAttributes リダイレクト先の画面に渡すデータ
 	 * @return リダイレクト先のURL
 	 */
@@ -119,7 +119,7 @@ public class MemberController {
 	/**
 	 * 加入者情報を削除する
 	 * 
-	 * @param id URLに指定された加入者ID
+	 * @param id                 URLに指定された加入者ID
 	 * @param redirectAttributes リダイレクト先の画面に渡すデータ
 	 * @return リダイレクト先のURL
 	 */
