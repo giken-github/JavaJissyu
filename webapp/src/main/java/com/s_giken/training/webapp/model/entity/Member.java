@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
+    @Nullable
     private Long memberId;
 
     @NotBlank
@@ -31,15 +33,16 @@ public class Member {
     private LocalDate startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Nullable
     private LocalDate endDate;
 
     @NotNull
     private Byte paymentMethod;
 
-    @NotNull
+    @Nullable
     private Timestamp createdDate;
 
-    @NotNull
+    @Nullable
     private Timestamp updatedDate;
 
     public String getPaymentMethodString() {

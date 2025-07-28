@@ -79,10 +79,14 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public void save(Member member) {
+        Long memberId = member.getMemberId();
+        if (memberId == null) {
+            memberId = jdbcTemplate.queryForObject("SELECT NEXT VALUE FOR t_member_seq", Long.class);
+            member.setMemberId(memberId);
+        }
         String sql = """
-                        INSERT INTO T_MEMBER (mail, name, address, start_date, end_date, payment_method, created_at, modified_at)
-                        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-                        -- Upsert for MySQL, H2
+                        INSERT INTO T_MEMBER (member_id, mail, name, address, start_date, end_date, payment_method, created_at, modified_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
                         ON DUPLICATE KEY UPDATE
                             mail = VALUES(mail),
                             name = VALUES(name),
@@ -92,12 +96,14 @@ public class MemberRepositoryImpl implements MemberRepository {
                             payment_method = VALUES(payment_method),
                             modified_at = CURRENT_TIMESTAMP
                 """;
-        jdbcTemplate.update(sql,
+        jdbcTemplate.update(
+                sql,
+                memberId,
                 member.getMail(),
                 member.getName(),
                 member.getAddress(),
-                Date.valueOf(member.getStartDate()),
-                Date.valueOf(member.getEndDate()),
+                member.getStartDate(),
+                member.getEndDate(),
                 member.getPaymentMethod());
     }
 

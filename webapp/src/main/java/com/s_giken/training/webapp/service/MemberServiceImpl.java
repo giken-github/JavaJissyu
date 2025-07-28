@@ -65,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public void save(Member member) {
-        // memberRepository.save(member);
+        memberRepository.save(member);
     }
 
     /**
@@ -76,6 +76,6 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public void deleteById(Long memberId) {
-        // memberRepository.deleteById(memberId);
+        memberRepository.deleteById(memberId);
     }
 }

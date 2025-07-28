@@ -13,6 +13,7 @@ import com.s_giken.training.webapp.model.entity.MemberSearchCondition;
 import com.s_giken.training.webapp.service.MemberService;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -51,7 +52,7 @@ public class MemberController {
 	 * 加入者検索結果画面を表示する
 	 * 
 	 * @param memberSearchCodition 加入者検索条件画面で入力された検索条件
-	 * @param model Thymeleafに渡すデータ
+	 * @param model                Thymeleafに渡すデータ
 	 * @return 加入者検索結果画面のテンプレート名
 	 */
 	@PostMapping("/search")
@@ -66,7 +67,7 @@ public class MemberController {
 	/**
 	 * 加入者編集画面を表示する
 	 * 
-	 * @param id URLに指定された加入者ID
+	 * @param id    URLに指定された加入者ID
 	 * @param model Thymeleafに渡すデータ
 	 * @return 加入者編集画面のテンプレート名
 	 */
@@ -98,12 +99,13 @@ public class MemberController {
 	/**
 	 * 加入者情報を保存する
 	 * 
-	 * @param member 加入者編集画面で入力された加入者情報
-	 * @param bindingResult 入力チェック結果
+	 * @param member             加入者編集画面で入力された加入者情報
+	 * @param bindingResult      入力チェック結果
 	 * @param redirectAttributes リダイレクト先の画面に渡すデータ
 	 * @return リダイレクト先のURL
 	 */
 	@PostMapping("/save")
+	@Transactional
 	public String saveMember(
 			@Validated Member member,
 			BindingResult bindingResult,
@@ -119,11 +121,12 @@ public class MemberController {
 	/**
 	 * 加入者情報を削除する
 	 * 
-	 * @param id URLに指定された加入者ID
+	 * @param id                 URLに指定された加入者ID
 	 * @param redirectAttributes リダイレクト先の画面に渡すデータ
 	 * @return リダイレクト先のURL
 	 */
 	@GetMapping("/delete/{id}")
+	@Transactional
 	public String deleteMember(
 			@PathVariable Long id,
 			RedirectAttributes redirectAttributes) {
