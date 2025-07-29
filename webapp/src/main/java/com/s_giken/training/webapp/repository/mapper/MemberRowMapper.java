@@ -18,14 +18,14 @@ import com.s_giken.training.webapp.model.entity.Member;
  */
 @Component
 public class MemberRowMapper implements RowMapper<Member> {
-    /** 
+    /**
      * マッピング処理を行うメソッド
      * 
-     * @param rs データベースからのレコードセット
+     * @param rs     データベースからのレコードセット
      * @param rowNum 処理行数
      * 
      * @return Memberオブジェクト
-    */
+     */
     @Override
     public Member mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         Member member = new Member();

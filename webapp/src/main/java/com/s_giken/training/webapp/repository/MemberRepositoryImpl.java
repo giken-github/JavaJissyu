@@ -20,6 +20,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         this.rowMapper = rowMapper;
     }
 
+    /**
+     * 加入者情報をすべて取得する。
+     * 
+     * @return Memberオブジェクトのリスト
+     */
     @Override
     public List<Member> findAll() {
         String sql = "SELECT * FROM T_MEMBER";
@@ -27,6 +32,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         return result;
     }
 
+    /**
+     * メールアドレスの一部にマッチするの加入者情報リストを取得する。
+     * 
+     * @return Optional型の Memberオブジェクト
+     */
     @Override
     public Optional<Member> findById(Long id) {
         String sql = "SELECT * FROM T_MEMBER WHERE member_id = ?";
@@ -36,6 +46,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         return Optional.ofNullable(member);
     }
 
+    /**
+     * メールアドレスの一部にマッチするの加入者情報リストを取得する。
+     * 
+     * @return Optional型の Memberオブジェクト
+     */
     @Override
     public List<Member> findByMailLike(String mail) {
         String sql = "SELECT * FROM T_MEMBER WHERE mail like ?";
@@ -45,6 +60,12 @@ public class MemberRepositoryImpl implements MemberRepository {
         return result;
     }
 
+    /**
+     * 加入者情報をデータベースへ登録する。
+     * 
+     * @param member 追加するMemberオブジェクト。 memberIdプロパティの値は null としなくてはならない
+     * @return 処理した件数
+     */
     @Override
     public int add(Member member) {
         Long memberId = member.getMemberId();
@@ -70,6 +91,12 @@ public class MemberRepositoryImpl implements MemberRepository {
         return processed_count;
     }
 
+    /**
+     * データベースの加入者情報を更新する。
+     * 
+     * @param member 更新するMemberオブジェクト。 memberIdプロパティには値が設定されている必要がある。
+     * @return 処理した件数
+     */
     @Override
     public int update(Member member) {
         String sql = """
@@ -97,6 +124,12 @@ public class MemberRepositoryImpl implements MemberRepository {
         return processed_count;
     }
 
+    /**
+     * データベースから指定した加入者IDの加入者情報を削除する。
+     * 
+     * @param id 加入者ID
+     * @return 処理した件数
+     */
     @Override
     public int deleteById(Long id) {
         String sql = "DELETE FROM T_MEMBER WHERE member_id = ?";
