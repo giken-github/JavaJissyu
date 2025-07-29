@@ -4,7 +4,6 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -16,9 +15,9 @@ public class MemberRepositoryImpl implements MemberRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Member> rowMapper;
 
-    public MemberRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public MemberRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Member> rowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.rowMapper = new DataClassRowMapper<>(Member.class);
+        this.rowMapper = rowMapper;
     }
 
     @Override
@@ -66,7 +65,7 @@ public class MemberRepositoryImpl implements MemberRepository {
                 member.getAddress(),
                 member.getStartDate(),
                 member.getEndDate(),
-                member.getPaymentMethod());
+                member.getPaymentMethod().getCode());
 
         return processed_count;
     }
@@ -92,7 +91,7 @@ public class MemberRepositoryImpl implements MemberRepository {
                 member.getAddress(),
                 member.getStartDate(),
                 member.getEndDate(),
-                member.getPaymentMethod(),
+                member.getPaymentMethod().getCode(),
                 member.getMemberId());
 
         return processed_count;
