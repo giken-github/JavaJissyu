@@ -1,13 +1,19 @@
 package com.s_giken.training.webapp.controller;
 
+import java.beans.PropertyEditorSupport;
+
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.s_giken.training.webapp.controller.editor.PaymentMethodEditorSupport;
 import com.s_giken.training.webapp.exception.NotFoundException;
+import com.s_giken.training.webapp.model.PaymentMethod;
 import com.s_giken.training.webapp.model.entity.Member;
 import com.s_giken.training.webapp.model.entity.MemberSearchCondition;
 import com.s_giken.training.webapp.service.MemberService;
@@ -33,6 +39,21 @@ public class MemberController {
 	 */
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
+	}
+
+	/**
+	 * コントローラで受けっとったリクエストの型変換方法をカスタマイズする。
+	 * 
+	 * 主に、独自で定義した型を利用している場合、デフォルトの方法では対応できないときに利用する。
+	 * 
+	 * @param binder リクエストパラメータ
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		// PaymentMethod列挙型
+		// リクエスト → PaymentMethod : Paymentmethod.fromCodeメソッドを利用して PaymentMethod列挙型へ変換
+		// Paymentmethod → リクエスト : Paymentmethod.getCodeメソッドを利用して、数値の文字列へ変換
+		binder.registerCustomEditor(PaymentMethod.class, new PaymentMethodEditorSupport());
 	}
 
 	/**
