@@ -90,21 +90,43 @@ public class MemberController {
 	 * @return 加入者追加画面のテンプレート名
 	 */
 	@GetMapping("/add")
-	public String addMember(Model model) {
+	public String formAddMember(Model model) {
 		var member = new Member();
 		model.addAttribute("member", member);
 		return "member_edit";
 	}
 
 	/**
-	 * 加入者情報を保存する
+	 * 加入者情報を登録する
 	 * 
 	 * @param member             加入者編集画面で入力された加入者情報
 	 * @param bindingResult      入力チェック結果
 	 * @param redirectAttributes リダイレクト先の画面に渡すデータ
 	 * @return リダイレクト先のURL
 	 */
-	@PostMapping("/save")
+	@PostMapping("/add")
+	@Transactional
+	public String addMember(
+			@Validated Member member,
+			BindingResult bindingResult,
+			RedirectAttributes redirectAttributes) {
+		if (bindingResult.hasErrors()) {
+			return "member_edit";
+		}
+		memberService.add(member);
+		redirectAttributes.addFlashAttribute("message", "保存しました。");
+		return "redirect:/member/edit/" + member.getMemberId();
+	}
+
+	/**
+	 * 加入者情報を更新する
+	 * 
+	 * @param member             加入者編集画面で入力された加入者情報
+	 * @param bindingResult      入力チェック結果
+	 * @param redirectAttributes リダイレクト先の画面に渡すデータ
+	 * @return リダイレクト先のURL
+	 */
+	@PostMapping("/update")
 	@Transactional
 	public String saveMember(
 			@Validated Member member,
@@ -113,7 +135,7 @@ public class MemberController {
 		if (bindingResult.hasErrors()) {
 			return "member_edit";
 		}
-		memberService.save(member);
+		memberService.update(member);
 		redirectAttributes.addFlashAttribute("message", "保存しました。");
 		return "redirect:/member/edit/" + member.getMemberId();
 	}

@@ -11,7 +11,9 @@ public interface MemberRepository {
 
     public List<Member> findByMailLike(String mail);
 
-    public void save(Member member);
+    public int add(Member member);
 
-    public void deleteById(Long id);
+    public int update(Member member);
+
+    public int deleteById(Long id);
 }
