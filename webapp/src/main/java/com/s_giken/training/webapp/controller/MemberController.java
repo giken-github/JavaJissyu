@@ -1,7 +1,5 @@
 package com.s_giken.training.webapp.controller;
 
-import java.beans.PropertyEditorSupport;
-
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
