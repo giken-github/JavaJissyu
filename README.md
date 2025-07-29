@@ -8,7 +8,7 @@
   - Thymeleaf
 - Spring Validation
 - Spring Security
-- Spring Data JPA
+- Spring JDBC
   - H2 Database 
   - PosgreSQL Driver
 - Lombok

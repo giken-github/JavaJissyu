@@ -21,7 +21,9 @@ public interface MemberService {
 
     public List<Member> findByConditions(MemberSearchCondition memberSearchCondition);
 
-    public void save(Member member);
+    public void add(Member member);
+
+    public void update(Member member);
 
     public void deleteById(Long memberId);
 }
