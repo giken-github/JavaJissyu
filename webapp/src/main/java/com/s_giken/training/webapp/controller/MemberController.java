@@ -98,6 +98,7 @@ public class MemberController {
 		if (!member.isPresent()) {
 			throw new NotFoundException(String.format("指定したmemberId(%d)の加入者情報が存在しません。", id));
 		}
+		model.addAttribute("isAddMode", false);
 		model.addAttribute("member", member.get());
 		return "member_edit";
 	}
@@ -111,6 +112,7 @@ public class MemberController {
 	@GetMapping("/add")
 	public String formAddMember(Model model) {
 		var member = new Member();
+		model.addAttribute("isAddMode", true);
 		model.addAttribute("member", member);
 		return "member_edit";
 	}
