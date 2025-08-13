@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @SpringBootApplication
 public class BatchApplication implements CommandLineRunner {
 	private final Logger logger = LoggerFactory.getLogger(BatchApplication.class);
-	// private final JdbcTemplate jdbcTemplate;
+	private final JdbcTemplate jdbcTemplate;
 
 	/**
 	 * SpringBoot エントリポイント
@@ -27,7 +27,7 @@ public class BatchApplication implements CommandLineRunner {
 	 * @param jdbcTemplate SpringBootから注入される JdbcTemplate オブジェクト
 	 */
 	public BatchApplication(JdbcTemplate jdbcTemplate) {
-		// this.jdbcTemplate = jdbcTemplate;
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	/**
@@ -40,9 +40,19 @@ public class BatchApplication implements CommandLineRunner {
 		logger.info("-".repeat(40));
 
 		// TODO: ここにバッチ処理のコードを記述する
-		// * データベースからデータを取得する
-		// * データを加工する
-		// * 加工したデータをデータベースに登録する
+		// - データベースからデータを取得する
+		// - データを加工する
+		// - 加工したデータをデータベースに登録する
+
+		// ダミーコード
+		// 削除してください。
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM T_MEMBER", Integer.class);
+		if (count != null) {
+			logger.info("加入者数:" + count.toString());
+		} else {
+			logger.error("加入者数を取得できませんでした。");
+		}
+		// ダミーコードここまで
 
 		logger.info("-".repeat(40));
 	}
